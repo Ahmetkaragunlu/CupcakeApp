@@ -12,7 +12,6 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -42,11 +41,11 @@ import com.ahmetkaragunlu.cupcakeapp.navigation.Screens
 fun SelectFlavorScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    subtotal: () -> String,
+    totalPrice: () -> String,
     setFlavor: (String) -> Unit,
+    flavor : String
 ) {
-    var selectedFlavor by rememberSaveable { mutableStateOf("") }
-    var isSelected by rememberSaveable { mutableStateOf(false) }
+    var selectedFlavor by rememberSaveable { mutableStateOf(flavor) }
 
     Scaffold(
         topBar = {
@@ -70,7 +69,6 @@ fun SelectFlavorScreen(
                                 onClick = {
                                     setFlavor(flavors.toString())
                                     selectedFlavor = flavors.toString()
-                                    isSelected = true
                                 }
                             ),
 
@@ -81,7 +79,6 @@ fun SelectFlavorScreen(
                                 onClick = {
                                     setFlavor(flavors.toString())
                                     selectedFlavor = flavors.toString()
-                                    isSelected = true
                                 },
                                 colors = RadioButtonDefaults.colors(selectedColor = Color(0xFF984062))
                             )
@@ -98,7 +95,7 @@ fun SelectFlavorScreen(
                 modifier = modifier.padding(bottom = 36.dp, start = 16.dp, end = 16.dp)
             )
             Text(
-                text = stringResource(R.string.subtotal, subtotal()),
+                text = stringResource(R.string.subtotal, totalPrice()),
                 modifier = modifier.padding(16.dp).fillMaxWidth(),
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.End
@@ -127,12 +124,12 @@ fun SelectFlavorScreen(
                 Spacer(modifier = modifier.weight(0.1f))
                 Button(
                     onClick = {
-
+                    navController.navigate(Screens.SelectDateScreen.route)
                     },
                     modifier = modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (isSelected) Color(0xFF984062) else Color(0xFFe4dfe3)
-                    )
+                        containerColor = if (selectedFlavor.isNotEmpty()) Color(0xFF984062) else Color(0xFFe4dfe3)
+                    ),
                 ) {
                     Text(
                         text = stringResource(id = R.string.next),

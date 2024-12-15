@@ -23,7 +23,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ahmetkaragunlu.cupcakeapp.R
@@ -35,7 +34,7 @@ import com.ahmetkaragunlu.cupcakeapp.navigation.Screens
 fun StartOrderScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    totalPrice: (Int) -> Unit
+    subTotal: (Int) -> Unit
 ) {
       Scaffold(
           topBar = {
@@ -64,7 +63,7 @@ fun StartOrderScreen(
               Column(modifier = modifier.fillMaxWidth()) {
                   Button(
                       onClick = {
-                          totalPrice(1)
+                          subTotal(1)
                           navController.navigate(Screens.SelectFlavorScreen.route)
                       },
                       colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF984062)),
@@ -80,7 +79,7 @@ fun StartOrderScreen(
                   }
                   Button(
                       onClick = {
-                          totalPrice(6)
+                          subTotal(6)
                           navController.navigate(Screens.SelectFlavorScreen.route)
                       },
                       colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF984062)),
@@ -96,7 +95,7 @@ fun StartOrderScreen(
                   }
                   Button(
                       onClick = {
-                          totalPrice(12)
+                          subTotal(12)
                           navController.navigate(Screens.SelectFlavorScreen.route)
                       },
                       colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF984062)),
