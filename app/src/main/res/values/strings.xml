@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">CupcakeApp</string>
     <string name="cupcake">Cupcake</string>
+    <string name="piece_cupcake">%d cupcake</string>
+    <string name="piece_cupcakes">%d cupcakes</string>
     <string name="order_cupcakes">Order Cupcakes</string>
     <string name="one_cupcake">One Cupcake</string>
     <string name="six_cupcakes">Six Cupcakes</string>
@@ -8,6 +10,13 @@
     <string name="chocolate">Chocolate</string>
     <string name="choose_flavor">Choose Flavor</string>
     <string name="cancel">Cancel</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="flavor">FLAVOR</string>
+    <string name="quantity">QUANTITY</string>
+    <string name="total_price">TOTAL PRICE</string>
+    <string name="pickup_date">PICKUP DATE</string>
+    <string name="share_order">Share Order</string>
+    <string name="send_order">Send Order to Another App</string>
     <string name="next">Next</string>
     <string name="subtotal">Subtotal:%s</string>
     <string name="red_velvet">Red Velvet</string>

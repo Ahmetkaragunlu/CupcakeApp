@@ -43,47 +43,58 @@ fun SelectFlavorScreen(
     navController: NavController,
     totalPrice: () -> String,
     setFlavor: (String) -> Unit,
-    flavor : String
+    flavor: String,
+    resetOrder: () -> Unit,
+    canNavigateBack: Boolean
 ) {
     var selectedFlavor by rememberSaveable { mutableStateOf(flavor) }
+    val flavorString = DataSource.flavors.map { stringResource(id = it) }
 
     Scaffold(
         topBar = {
             CupcakeAppBar(
                 title = R.string.choose_flavor,
-                iconButton = true,
-                navigateIcon = {}
+                canNavigateBack = canNavigateBack,
+                navigateIcon = {
+                    navController.popBackStack()
+                    resetOrder()
+                }
             )
         }
     ) { innerPadding ->
-        Column(modifier = modifier.fillMaxSize().padding(innerPadding).verticalScroll(rememberScrollState())) {
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+        ) {
             Column(modifier = modifier.fillMaxWidth()) {
-                DataSource.flavors.forEach { flavors ->
+                flavorString.forEach { flavors ->
                     Column(
                         modifier = modifier.padding(start = 16.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         Row(
                             modifier = modifier.selectable(
-                                selected = selectedFlavor == flavors.toString(),
+                                selected = selectedFlavor == flavors,
                                 onClick = {
-                                    setFlavor(flavors.toString())
-                                    selectedFlavor = flavors.toString()
+                                    setFlavor(flavors)
+                                    selectedFlavor = flavors
                                 }
                             ),
 
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             RadioButton(
-                                selected = selectedFlavor == flavors.toString(),
+                                selected = selectedFlavor == flavors,
                                 onClick = {
-                                    setFlavor(flavors.toString())
-                                    selectedFlavor = flavors.toString()
+                                    setFlavor(flavors)
+                                    selectedFlavor = flavors
                                 },
                                 colors = RadioButtonDefaults.colors(selectedColor = Color(0xFF984062))
                             )
                             Text(
-                                text = stringResource(id = flavors)
+                                text = flavors
                             )
                         }
 
@@ -96,7 +107,9 @@ fun SelectFlavorScreen(
             )
             Text(
                 text = stringResource(R.string.subtotal, totalPrice()),
-                modifier = modifier.padding(16.dp).fillMaxWidth(),
+                modifier = modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.End
             )
@@ -111,6 +124,7 @@ fun SelectFlavorScreen(
                 OutlinedButton(
                     onClick = {
                         navController.navigate(Screens.StartOrderScreen.route)
+                        resetOrder()
                     },
                     modifier = modifier.weight(1f)
                 ) {
@@ -124,11 +138,13 @@ fun SelectFlavorScreen(
                 Spacer(modifier = modifier.weight(0.1f))
                 Button(
                     onClick = {
-                    navController.navigate(Screens.SelectDateScreen.route)
+                        navController.navigate(Screens.SelectDateScreen.route)
                     },
                     modifier = modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (selectedFlavor.isNotEmpty()) Color(0xFF984062) else Color(0xFFe4dfe3)
+                        containerColor = if (selectedFlavor.isNotEmpty()) Color(0xFF984062) else Color(
+                            0xFFe4dfe3
+                        )
                     ),
                 ) {
                     Text(
@@ -138,9 +154,7 @@ fun SelectFlavorScreen(
                     )
                 }
             }
-
         }
-
     }
 }
 

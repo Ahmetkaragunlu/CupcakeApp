@@ -7,5 +7,4 @@ data class OrderData(
     val price : Int = 0,
     val flavor : String = "",
     val dateList : MutableList<String> = mutableListOf()
-
 )

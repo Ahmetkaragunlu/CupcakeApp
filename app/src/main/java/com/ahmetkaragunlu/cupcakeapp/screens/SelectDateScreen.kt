@@ -34,24 +34,25 @@ import com.ahmetkaragunlu.cupcakeapp.R
 import com.ahmetkaragunlu.cupcakeapp.model.CupcakeAppBar
 import com.ahmetkaragunlu.cupcakeapp.navigation.Screens
 
-
 @Composable
 fun SelectDateScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    currentDateList : () -> List<String>,
+    currentDateList: () -> List<String>,
     totalPrice: () -> String,
-    setDate : (String) -> Unit,
-    date : String
-    ) {
-    val dateList= currentDateList()
+    setDate: (String) -> Unit,
+    date: String,
+    resetOrder: () -> Unit,
+    canNavigateBack: Boolean
+) {
+    val dateList = currentDateList()
     var selectedDate by rememberSaveable { mutableStateOf(date) }
     Scaffold(
         topBar = {
             CupcakeAppBar(
                 title = R.string.choose_pickup_date,
-                iconButton = true,
-                navigateIcon = {}
+                canNavigateBack = canNavigateBack,
+                navigateIcon = { navController.popBackStack() }
             )
         }
     ) { innerPadding ->
@@ -61,22 +62,24 @@ fun SelectDateScreen(
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
-            Column(modifier = modifier.fillMaxWidth().padding(16.dp)) {
+            Column(modifier = modifier
+                .fillMaxWidth()
+                .padding(16.dp)) {
                 dateList.forEach { date ->
                     Row(
                         modifier = modifier.selectable(
                             selected = selectedDate == date,
-                                onClick = {
-                                    selectedDate=date
-                                    setDate(date)
-                                },
+                            onClick = {
+                                selectedDate = date
+                                setDate(date)
+                            },
                         ),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
                             selected = selectedDate == date,
                             onClick = {
-                                selectedDate=date
+                                selectedDate = date
                                 setDate(date)
                             },
                             colors = RadioButtonDefaults.colors(selectedColor = Color(0xFF984062))
@@ -85,17 +88,19 @@ fun SelectDateScreen(
                     }
                 }
             }
-                HorizontalDivider(
-                    thickness = 1.dp,
-                    modifier = modifier.padding(bottom = 36.dp, start = 16.dp, end = 16.dp)
-                )
-                Text(
-                    text = stringResource(R.string.subtotal, totalPrice()),
-                    modifier = modifier.padding(16.dp).fillMaxWidth(),
-                    style = MaterialTheme.typography.titleLarge,
-                    textAlign = TextAlign.End
-                )
-                Spacer(modifier = modifier.weight(1f))
+            HorizontalDivider(
+                thickness = 1.dp,
+                modifier = modifier.padding(bottom = 36.dp, start = 16.dp, end = 16.dp)
+            )
+            Text(
+                text = stringResource(R.string.subtotal, totalPrice()),
+                modifier = modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.End
+            )
+            Spacer(modifier = modifier.weight(1f))
             Row(
                 modifier = modifier
                     .fillMaxWidth()
@@ -104,7 +109,8 @@ fun SelectDateScreen(
             {
                 OutlinedButton(
                     onClick = {
-                        navController.navigate(Screens.SelectFlavorScreen.route)
+                        navController.navigate(Screens.StartOrderScreen.route)
+                        resetOrder()
                     },
                     modifier = modifier.weight(1f)
                 ) {
@@ -118,10 +124,13 @@ fun SelectDateScreen(
                 Spacer(modifier = modifier.weight(0.1f))
                 Button(
                     onClick = {
+                        navController.navigate(Screens.SummaryScreen.route)
                     },
                     modifier = modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (selectedDate.isNotEmpty()) Color(0xFF984062) else Color(0xFFe4dfe3)
+                        containerColor = if (selectedDate.isNotEmpty()) Color(0xFF984062) else Color(
+                            0xFFe4dfe3
+                        )
                     ),
                 ) {
                     Text(
@@ -132,10 +141,10 @@ fun SelectDateScreen(
                 }
             }
 
-            }
-
         }
+
     }
+}
 
 
 

@@ -1,4 +1,3 @@
-
 package com.ahmetkaragunlu.cupcakeapp.screens
 
 import androidx.compose.foundation.Image
@@ -36,84 +35,88 @@ fun StartOrderScreen(
     navController: NavController,
     subTotal: (Int) -> Unit
 ) {
-      Scaffold(
-          topBar = {
-              CupcakeAppBar(
-                  title = R.string.cupcake,
-                  iconButton = false,
-              )
-          }
-      ) { innerPadding ->
-          Column(modifier = modifier.fillMaxSize().padding(innerPadding).verticalScroll(rememberScrollState())) {
-              Column(
-                  modifier = modifier.fillMaxWidth().padding(24.dp),
-                  horizontalAlignment = Alignment.CenterHorizontally,
-                  verticalArrangement = Arrangement.spacedBy(24.dp)
-              ) {
-                  Image(
-                      painter = painterResource(R.drawable.cupcake),
-                      contentDescription = null
-                  )
-                  Text(
-                      text = stringResource(R.string.order_cupcakes),
-                      style = MaterialTheme.typography.headlineSmall
-                  )
-              }
-              Spacer(modifier = modifier.weight(1f))
-              Column(modifier = modifier.fillMaxWidth()) {
-                  Button(
-                      onClick = {
-                          subTotal(1)
-                          navController.navigate(Screens.SelectFlavorScreen.route)
-                      },
-                      colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF984062)),
-                      shape = RoundedCornerShape(32.dp),
-                      modifier = modifier.padding(8.dp)
-                  ) {
-                      Text(
-                          text = stringResource(R.string.one_cupcake),
-                          modifier=modifier.fillMaxWidth(),
-                          textAlign = TextAlign.Center,
-                          style = MaterialTheme.typography.labelLarge
-                      )
-                  }
-                  Button(
-                      onClick = {
-                          subTotal(6)
-                          navController.navigate(Screens.SelectFlavorScreen.route)
-                      },
-                      colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF984062)),
-                      shape = RoundedCornerShape(32.dp),
-                      modifier = modifier.padding(8.dp)
-                  ) {
-                      Text(
-                          text = stringResource(R.string.six_cupcakes),
-                          modifier=modifier.fillMaxWidth(),
-                          textAlign = TextAlign.Center,
-                          style = MaterialTheme.typography.labelLarge
-                      )
-                  }
-                  Button(
-                      onClick = {
-                          subTotal(12)
-                          navController.navigate(Screens.SelectFlavorScreen.route)
-                      },
-                      colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF984062)),
-                      shape = RoundedCornerShape(32.dp),
-                      modifier = modifier.padding(8.dp),
-                  ) {
-                      Text(
-                          text = stringResource(R.string.twelve_cupcakes),
-                          modifier=modifier.fillMaxWidth(),
-                          textAlign = TextAlign.Center,
-                          style = MaterialTheme.typography.labelLarge
-                      )
-                  }
-              }
-
-          }
-
-      }
-
+    Scaffold(
+        topBar = {
+            CupcakeAppBar(
+                title = R.string.cupcake,
+                canNavigateBack = false,
+            )
+        }
+    ) { innerPadding ->
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+        ) {
+            Column(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(24.dp)
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.cupcake),
+                    contentDescription = null
+                )
+                Text(
+                    text = stringResource(R.string.order_cupcakes),
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            }
+            Spacer(modifier = modifier.weight(1f))
+            Column(modifier = modifier.fillMaxWidth()) {
+                Button(
+                    onClick = {
+                        subTotal(1)
+                        navController.navigate(Screens.SelectFlavorScreen.route)
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF984062)),
+                    shape = RoundedCornerShape(32.dp),
+                    modifier = modifier.padding(8.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.one_cupcake),
+                        modifier = modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                }
+                Button(
+                    onClick = {
+                        subTotal(6)
+                        navController.navigate(Screens.SelectFlavorScreen.route)
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF984062)),
+                    shape = RoundedCornerShape(32.dp),
+                    modifier = modifier.padding(8.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.six_cupcakes),
+                        modifier = modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                }
+                Button(
+                    onClick = {
+                        subTotal(12)
+                        navController.navigate(Screens.SelectFlavorScreen.route)
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF984062)),
+                    shape = RoundedCornerShape(32.dp),
+                    modifier = modifier.padding(8.dp),
+                ) {
+                    Text(
+                        text = stringResource(R.string.twelve_cupcakes),
+                        modifier = modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                }
+            }
+        }
+    }
 }
 
